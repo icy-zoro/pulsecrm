@@ -1,69 +1,29 @@
 import './Sidebar.css'
+import classNames from 'classnames';
 import plusIcon from '../assets/plus-mini.svg'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { sidebarWidthAtom } from '../state/atoms'
-import { useAtom } from 'jotai'
-
-const breakpoints = {
-    collapsed: 80,
-    expanded: 320,
-    max: 512,
-}
+import { useState } from 'react'
+import { useSidebarResize } from '../hooks/use-sidebar-resize';
+import { useSidebarParams } from '../hooks/use-sidebar-params';
 
 export default function Sidebar() {
-    const sidebarRef = useRef<HTMLBaseElement>(null)
-    const cardRef = useRef<HTMLDivElement>(null)
+    const [cardVisible, setCardVisible] = useState<boolean>(true)
+    const { startResize, toggleSidebar } = useSidebarResize();
+    const { sidebarWidth, collapsed } = useSidebarParams();
 
-    const [sidebarWidth, setSidebarWidth] = useAtom(sidebarWidthAtom)
-    const [isResizing, setIsResizing] = useState(false)
-
-    const handleCardClose = useCallback(() => {
-        cardRef.current?.classList.add('hidden')
-    }, [])
-
-    const handleSidebarToggle = useCallback(() => setSidebarWidth(
-        sidebarRef.current?.classList.contains('collapsed')
-            ? breakpoints.expanded
-            : breakpoints.collapsed
-    ), [])
-
-    const startResize = useCallback(() => setIsResizing(true), [])
-    const stopResize = useCallback(() => setIsResizing(false), [])
-    const handleResize = useCallback((e: MouseEvent) => {
-        if (isResizing) setSidebarWidth(e.clientX)
-    }, [isResizing])
-
-    useEffect(() => {
-        window.addEventListener('mousemove', handleResize)
-        window.addEventListener('mouseup', stopResize)
-
-        return () => {
-            window.removeEventListener('mousemove', handleResize)
-            window.removeEventListener('mouseup', stopResize)
-        }
-    }, [isResizing, handleResize])
-
-    useEffect(() => {
-        if (!sidebarRef.current) return
-
-        if (sidebarWidth < breakpoints.expanded) {
-            sidebarRef.current.classList.add('collapsed')
-            sidebarRef.current.style.width = ``;
-        }
-        else if (sidebarWidth >= breakpoints.max) {
-            sidebarRef.current.classList.remove('collapsed')
-            sidebarRef.current.style.width = `${breakpoints.max}px`;
-        }
-        else {
-            sidebarRef.current.classList.remove('collapsed')
-            sidebarRef.current.style.width = `${sidebarWidth}px`;
-        }
-    }, [sidebarWidth])
+    const handleCardClose = () => {
+      setCardVisible(false)
+    }
 
     return (
-        <aside ref={sidebarRef}>
-            <div className="resize-handle" onMouseDown={startResize}>
-                <button className="btn-collapse-toggle" onClick={handleSidebarToggle}>
+        <aside
+          className={classNames({ collapsed: collapsed })}
+          style={{ width: sidebarWidth }}
+        >
+            <div
+              className={classNames("resize-handle", { resizable: !collapsed })}
+              onMouseDown={startResize}
+            >
+                <button className="btn-collapse-toggle" onClick={toggleSidebar}>
                     <img src="/icons/dots.svg" alt="Collapsing dots button" className="dots" />
                 </button>
             </div>
@@ -175,7 +135,7 @@ export default function Sidebar() {
                         </ul>
                     </div>
                 </nav>
-                <div className='card' ref={cardRef}>
+                <div className={classNames('card', { hidden: !cardVisible })}>
                     <div className='heading'>
                         <h4>Get a bonus!</h4>
                         <button className='btn-close' onClick={handleCardClose}>

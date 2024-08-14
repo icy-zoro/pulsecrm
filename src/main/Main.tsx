@@ -1,18 +1,11 @@
-import { useAtomValue } from 'jotai'
-import { useEffect, useRef } from 'react'
-import { sidebarWidthAtom } from '../state/atoms'
+import { useSidebarParams } from '../hooks/use-sidebar-params';
 
 export default function Main() {
-    const mainRef = useRef<HTMLBaseElement | null>(null)
-    const sidebarWidth = useAtomValue(sidebarWidthAtom)
-
-    useEffect(() => {
-        if (!mainRef.current) return
-        mainRef.current.style.marginLeft = `${sidebarWidth}px`
-    }, [sidebarWidth, mainRef.current])
+  const { sidebarWidth } = useSidebarParams();
 
     return (
-        <main ref={mainRef}>
+        <main style={{ marginLeft: sidebarWidth }}>
+          <span>Test</span>
         </main>
     )
 }
