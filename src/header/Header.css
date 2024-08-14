@@ -1,13 +1,13 @@
 header a, header a:hover {
-    @apply text-black font-bold no-underline;
+    @apply text-black no-underline;
 }
 
 header {
-    padding: 1rem 1.7rem;
+    @apply sticky top-0 z-10 py-4 px-7;
 }
 
 header h1 {
-    @apply m-0;
+    @apply m-0 text-lg leading-5 font-extrabold;
 }
 
 header {

@@ -2,41 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+:root {
+  @apply font-sans font-medium text-base;
 
-    color-scheme: light;
+  color-scheme: light;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-  }
-
-  body {
-    margin: 0;
-    background-color: #F1F3F5;
-  }
-
-  ul {
-    @apply list-none;
-  }
-
-  li {
-    @apply p-0;
-  }
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer components {
-  .btn-primary {
-    @apply h-10 px-3 py-2 text-white;
-    
-    background: linear-gradient(0deg, #030712, #030712),
-      linear-gradient(180deg, #ffffff29 0%, #ffffff00 100%);
-    background-blend-mode: normal, overlay;
-  }
+body {
+  margin: 0;
+  background-color: #F1F3F5;
+}
+
+ul {
+  @apply list-none;
+}
+
+li {
+  @apply p-0;
+}
+
+.btn-primary {
+  @apply h-10 px-3 py-2 text-white;
+
+  background: linear-gradient(180deg, #ffffff29 0%, #ffffff00 100%),
+    linear-gradient(0deg, #030712, #030712);
+  border-radius: 5px;
+
+  border: 1px solid #030712;
+  box-shadow: 0px 1px 0px 0px #FFFFFF29 inset;
+}
+
+.btn-primary:hover {
+  box-shadow: 0px 1.75px 0px 0px #FFFFFF29 inset;
+}
+
+.btn-primary:active {
+  background: #030712;
+  border: 1px solid #030712;
+  box-shadow: none;
 }
