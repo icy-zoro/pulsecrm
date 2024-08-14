@@ -1,0 +1,15 @@
+header a, header a:hover {
+    @apply text-black font-bold no-underline;
+}
+
+header {
+    padding: 1rem 1.7rem;
+}
+
+header h1 {
+    @apply m-0;
+}
+
+header {
+    @apply bg-white;
+}
