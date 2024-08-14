@@ -18,6 +18,10 @@ body {
   background-color: #F1F3F5;
 }
 
+.no-select {
+  user-select: none;
+}
+
 ul {
   @apply list-none;
 }

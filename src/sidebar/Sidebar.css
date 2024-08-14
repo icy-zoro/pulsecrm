@@ -8,7 +8,11 @@ aside .wrapper {
 }
 
 aside .resize-handle {
-    @apply absolute top-0 bottom-0 right-0 cursor-col-resize w-px bg-gray-300;
+    @apply absolute top-0 bottom-0 right-0 w-px bg-gray-300;
+}
+
+aside .resize-handle.resizable {
+  @apply cursor-col-resize;
 }
 
 aside nav {
